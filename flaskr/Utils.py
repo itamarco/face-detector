@@ -1,10 +1,15 @@
 import wget
-from urllib.parse import urlparse
 import uuid
+import os
+from urllib.parse import urlparse
+
+APP_ROOT = os.path.dirname(os.path.abspath(__file__))
 
 def download_file_url(url):
+	img_name = uuid.uuid1()
+	path = os.path.join(APP_ROOT, f'imgs/{img_name}')
 	try:
-		file_path = wget.download(url, f'../imgs/{uuid.uuid1()}')
+		file_path = wget.download(url, path)
 		return file_path
 	except:
 		raise DownloadError()

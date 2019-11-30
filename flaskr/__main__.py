@@ -11,7 +11,6 @@ app = Flask(__name__)
 
 @app.route("/")
 def index():
-	print(os.path.dirname(os.path.abspath(__file__)))
 	return "Hello from Flask!"
 
 
@@ -24,7 +23,8 @@ def detect_faces():
 	try:
 		total_faces = FaceService.detect_faces(url_input)
 		return f"{total_faces}", 200
-	except DownloadError:
+	except DownloadError as err:
+		logging.exception(err)
 		return f"could not download image from {url_input}", 500
 	except FaceDetectionError as err:
 		logging.exception(err)
@@ -32,5 +32,6 @@ def detect_faces():
 
 
 if __name__ == "__main__":
-	# app.run(host='0.0.0.0', debug=True)
 	app.run()
+	# app.run(host='0.0.0.0')
+

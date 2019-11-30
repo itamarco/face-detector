@@ -1,5 +1,5 @@
 /venv
-/imgs
+/flaskr/imgs
 /.idea
 
 __pycache__/

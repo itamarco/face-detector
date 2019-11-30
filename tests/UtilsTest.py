@@ -2,13 +2,18 @@ import unittest
 import os
 
 from flaskr import Utils
+from flaskr.Utils import DownloadError
 
 
-class MyTestCase(unittest.TestCase):
+class DownloadFile(unittest.TestCase):
 	def test_downloadImage(self):
-		Utils.download_file_url("https://media.wired.com/photos/5b8999943667562d3024c321/master/w_2560%2Cc_limit/trash2-01.jpg")
-		self.assertTrue(os.path.exists("./pic.jpg"))
+		img_path = Utils.download_file_url("https://media.wired.com/photos/5b8999943667562d3024c321/master/w_2560%2Cc_limit/trash2-01.jpg")
+		print(img_path)
+		self.assertTrue(os.path.exists(img_path))
 
+	def test_inavlidUrl(self):
+		with self.assertRaises(DownloadError):
+			Utils.download_file_url("http://www.not-exist-img.com/lie.jpg")
 
 class UrlValidation(unittest.TestCase):
 	def test_validUrl(self):
